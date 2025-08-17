@@ -249,10 +249,10 @@ body::before {
     if (!player) return;
     if (isPlaying) {
       player.pauseVideo();
-      this.textContent = "🎵 Play Music";
+      this.textContent = "🎵 GET PUMPED";
     } else {
       player.playVideo(); // user gesture -> allowed to start with sound
-      this.textContent = "⏸ Pause Music";
+      this.textContent = "⏸ CONCENTRATE";
     }
     isPlaying = !isPlaying;
   });
