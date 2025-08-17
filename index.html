@@ -175,9 +175,12 @@ body::before {
   z-index: -1; /* behind everything */
   filter: brightness(0.85);
 }
-    .card {
-  background: #1e2a1b; /* dark green solid w/ slight transparency */
-  opacity: 1 !important;
+    .card {/* Course blocks: solid but slightly transparent with blur */
+.card {
+  background: rgba(15, 27, 18, 0.92); /* deep forest w/ slight transparency */
+  backdrop-filter: blur(6px);          /* softens bg behind the block */
+  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+  opacity: 1;                          /* ensure content is visible */
 }
   </style>
 </head>
