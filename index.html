@@ -164,6 +164,24 @@
 
     /* Tiny Triforce icon (used multiple places) */
     .tri{ width:16px; height:14px; display:inline-block; vertical-align:-2px; }
+    /* Zelda background overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("zelda-bg.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* behind everything */
+  filter: brightness(0.85);
+}
+    .card {/* Course blocks: solid but slightly transparent with blur */
+.card {
+   background: rgba(248, 241, 227, 0.9); /* parchment w/ ~50% transparency */
+  backdrop-filter: blur(6px);          /* softens bg behind the block */
+  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+  opacity: 1;                          /* ensure content is visible */
+}
   </style>
 </head>
   <!-- Zelda Theme Song (YouTube Embed) -->
