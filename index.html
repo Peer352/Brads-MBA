@@ -219,9 +219,14 @@ body::before {
   50%    { transform: translateY(-6px); }
 }
 
-/* (optional) pressing feedback */
-#music-toggle:active{ transform: translateY(-1px) scale(1.01); 
-    }
+/* optional: stronger pulse */
+#music-toggle.pulse{
+  animation: floaty 3s ease-in-out infinite, pulseGlow 2.4s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 10px rgba(212,175,55,.55); }
+  50%    { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 22px rgba(240,216,117,.95); }
+}
       </style>
 </head>
 
