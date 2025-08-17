@@ -182,7 +182,28 @@ body::before {
   -webkit-backdrop-filter: blur(6px);  /* Safari support */
   opacity: 1;                          /* ensure content is visible */
 }
-  </style>
+ /* Music control button */
+#music-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  font-family: "Cinzel", serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--ink);
+  background: rgba(248, 241, 227, 0.9); /* parchment */
+  border: 2px solid rgba(222, 200, 150, 0.9);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: background 0.2s, transform 0.2s;
+}
+#music-toggle:hover {
+  background: rgba(248, 241, 227, 1);
+  transform: scale(1.05);
+}
+      </style>
 </head>
   <!-- Zelda Theme Song (YouTube Embed) -->
 <iframe width="0" height="0"
@@ -357,5 +378,31 @@ body::before {
 
 <!-- Music Control Button -->
 <button id="music-toggle">🎵 Play Music</button>
+  <script>
+  // Load YouTube IFrame API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('zelda-music');
+  }
+
+  const button = document.getElementById('music-toggle');
+  let isPlaying = false;
+
+  button.addEventListener('click', () => {
+    if (isPlaying) {
+      player.pauseVideo();
+      button.textContent = "🎵 Play Music";
+    } else {
+      player.playVideo();
+      button.textContent = "⏸ Pause Music";
+    }
+    isPlaying = !isPlaying;
+  });
+</script>
 </body>
 </html>
