@@ -229,48 +229,6 @@ body::before {
 }
       </style>
 </head>
-
-<!-- Zelda Theme (YouTube, user-controlled) -->
-<iframe id="zelda-music" width="0" height="0"
-  src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU&playsinline=1&origin=https://peer352.github.io"
-  frameborder="0"
-  allow="autoplay">
-</iframe>
-
-<button id="music-toggle">🎵 Let's get pumped!!</button>
-
-<script>
-  // Load YouTube IFrame API
-  (function () {
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  })();
-
-  let player, isPlaying = false;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('zelda-music', {
-      events: {
-        'onReady': function () {
-          try { player.setLoop(true); } catch(e){}
-        }
-      }
-    });
-  }
-
-  document.getElementById('music-toggle').addEventListener('click', function () {
-    if (!player) return;
-    if (isPlaying) {
-      player.pauseVideo();
-      this.textContent = "🎵 GET PUMPED";
-    } else {
-      player.playVideo(); // user gesture -> allowed to start with sound
-      this.textContent = "⏸ CONCENTRATE";
-    }
-    isPlaying = !isPlaying;
-  });
 </script>
 </script>
 <body>
