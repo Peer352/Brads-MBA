@@ -385,45 +385,53 @@ body::before {
       </a>
     </div>
 
+    
     <footer>
       <span>© 2025 MBA Quest Hub</span>
       <span>Trials (exams) unlock soon.</span>
     </footer>
   </div>
+
   <!-- Zelda Theme Song (YouTube Embed, hidden) -->
-<iframe id="zelda-music" width="0" height="0"
-  src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU"
-  frameborder="0"
-  allow="autoplay">
-</iframe>
+  <iframe id="zelda-music" width="0" height="0"
+    src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU"
+    frameborder="0"
+    allow="autoplay">
+  </iframe>
+      
+  <!-- Music Control Button -->
+  <button id="music-toggle">🎵 Play Music</button>
 
-<!-- Music Control Button -->
-<button id="music-toggle">🎵 Play Music</button>
   <script>
-  // Load YouTube IFrame API
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // Load YouTube IFrame API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('zelda-music');
-  }
-
-  const button = document.getElementById('music-toggle');
-  let isPlaying = false;
-
-  button.addEventListener('click', () => {
-    if (isPlaying) {
-      player.pauseVideo();
-      button.textContent = "🎵 Play Music";
-    } else {
-      player.playVideo();
-      button.textContent = "⏸ Pause Music";
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('zelda-music');
     }
-    isPlaying = !isPlaying;
-  });
-</script>
+
+    const button = document.getElementById('music-toggle');
+    let isPlaying = false;
+
+    button.addEventListener('click', () => {
+      if (!player || !player.playVideo) return;
+      if (isPlaying) {
+        player.pauseVideo();
+        button.textContent = "🎵 Play Music";
+      } else {
+        player.playVideo();
+        button.textContent = "⏸ Pause Music";
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
 </body>
 </html>
+
+
+
+
