@@ -1,5 +1,98 @@
 /* styles.css */
 body {
+/* ===== French 504 Card ===== */
+.course-card{
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+
+  /* reuse your main background */
+  background-image: url('./images/zelda-bg.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.course-card__overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));
+  backdrop-filter: blur(1px);
+}
+
+.course-card__header{
+  position: relative; z-index: 1;
+}
+
+.course-card__header h2{
+  margin: 0;
+  font-size: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* sub-cards container: row on larger screens, stack on small */
+.course-card__subcards{
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 720px){
+  .course-card__subcards{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* individual sub-card */
+.subcard{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+
+  transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+.subcard:hover,
+.subcard:focus-visible{
+  transform: translateY(-2px);
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+  outline: none;
+}
+
+.subcard__title{
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
+}
+
+.subcard__cta{
+  font-size: 1.25rem;
+  opacity: 0.9;
+  transition: transform 120ms ease;
+}
+
+.subcard:hover .subcard__cta{ transform: translateX(2px); }
+
+/* optional: compact spacing if your grid is tight */
+.course-card.compact{ padding: 1rem; }
   margin: 0;
   min-height: 100vh;
   background-image: url('./images/zelda-bg.png');
@@ -7,3 +100,15 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* === Subcards inside an existing course card (MBA 504) === */
+.french-subcards{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 720px){
+  .french-subcards{
+    grid-template-columns: repeat(3, 1fr);
+  }

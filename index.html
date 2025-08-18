@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+∑∑<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -223,8 +223,7 @@ body::before {
 #music-toggle.pulse{
   animation: floaty 3s ease-in-out infinite, pulseGlow 2.4s ease-in-out infinite;
 }
-@keyframes pulseGlow{
-  0%,100%{ box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 10px rgba(212,175,55,.55); }
+@keyframes pulseGlow{  0%,100%{ box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 10px rgba(212,175,55,.55); }
   50%    { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 22px rgba(240,216,117,.95); }
 }
       </style>
@@ -276,18 +275,21 @@ body::before {
     <!-- Grid -->
     <div class="grid">
       <!-- Each card’s href will later point to /courses/slug.html -->
-      <a class="card" href="#" title="MBA 504">
-        <span class="pill">Summer 2 · 2025</span>
-        <div class="title">MBA 504 · Business Law</div>
-        <div class="meta">Edicts and contracts of the realm.</div>
-        <div class="go">Enter course
-          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </a>
+<section class="card" title="MBA 504">
+  <span class="pill">Summer 2 · 2025</span>
+  <div class="title">MBA 504 · Business Law</div>
+  <div class="meta">Edicts and contracts of the realm.</div>
 
-      <a class="card" href="#">
-        <span class="pill">Fall 1 · 2025</span>
-        <div class="title">MBA 539 · Healthcare Finance</div>
+  <!-- Single action button that goes to your new French 504 hub -->
+  <a href="french-504/index.html" class="go">
+    Enter course
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section> 
+<a class="card" href="#">
+       <div class="title">MBA 539 · Healthcare Finance</div>
         <div class="meta">The rupees and rituals of care.</div>
         <div class="go">Enter course
           <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
@@ -391,7 +393,7 @@ body::before {
       <span>Trials (exams) unlock soon.</span>
     </footer>
   </div>
-
+<!-- ===== End French for MBA 504 Card ===== -->
   <!-- Zelda Theme Song (YouTube Embed, hidden) -->
   <iframe id="zelda-music" width="0" height="0"
     src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU"
