@@ -100,3 +100,15 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* === Subcards inside an existing course card (MBA 504) === */
+.french-subcards{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 720px){
+  .french-subcards{
+    grid-template-columns: repeat(3, 1fr);
+  }
