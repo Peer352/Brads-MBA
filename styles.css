@@ -1,0 +1,9 @@
+/* styles.css */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-image: url('./images/zelda-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

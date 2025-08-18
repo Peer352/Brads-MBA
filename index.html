@@ -149,8 +149,8 @@
       border:1px solid rgba(240,216,117,.25);
       padding:3px 8px; border-radius:999px;
     }
-    .title{ margin-top:6px; font-family: Cinzel, serif; font-weight:700; font-size:16px; }
-    .meta{ color:var(--ink-dim); font-size:13px; }
+    .title{ margin-top:6px; font-family: Cinzel, serif; font-weight:700; font-size:16px; color: #000; /* change added */ }
+    .meta{ color:#000; font-size:13px; }
     .go{ margin-top:6px; display:inline-flex; align-items:center; gap:8px; color:var(--gold-2); font-weight:600; }
     .go svg{ width:16px; height:16px; }
 
@@ -164,9 +164,73 @@
 
     /* Tiny Triforce icon (used multiple places) */
     .tri{ width:16px; height:14px; display:inline-block; vertical-align:-2px; }
-  </style>
-  <link rel="stylesheet" href="styles.css">
+    /* Zelda background overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("zelda-bg.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* behind everything */
+  filter: brightness(0.85);
+}
+.card {
+   background: rgba(248, 241, 227, 0.25); /* much less transparent */
+  backdrop-filter: blur(6px);          /* softens bg behind the block */
+  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+  opacity: 1;                          /* ensure content is visible */
+}
+ 
+/* Enchanted floating music button */
+#music-toggle{
+  position: fixed; right: 20px; bottom: 20px;
+  padding: 12px 20px;
+  font-family: "Cinzel", serif; font-weight: 800; letter-spacing:.3px;
+  font-size: 16px; color:#1b1b1b;
+
+  /* parchment + subtle gold sheen */
+  background: linear-gradient(135deg, #f8f1e3, #eadfc4);
+  border: 2px solid #d4af37;
+  border-radius: 16px;
+
+  /* float + glow */
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),           /* depth */
+    0 0 12px rgba(212,175,55,.55);        /* golden aura */
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  animation: floaty 3s ease-in-out infinite;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+#music-toggle:hover{
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.55),
+    0 0 18px rgba(240,216,117,.85);
+  filter: brightness(1.03);
+}
+
+/* subtle floating motion */
+@keyframes floaty{
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-6px); }
+}
+
+/* optional: stronger pulse */
+#music-toggle.pulse{
+  animation: floaty 3s ease-in-out infinite, pulseGlow 2.4s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 10px rgba(212,175,55,.55); }
+  50%    { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 22px rgba(240,216,117,.95); }
+}
+      </style>
 </head>
+</script>
+</script>
 <body>
   <div class="wrap">
     <!-- Top bar -->
@@ -325,5 +389,40 @@
       <span>Trials (exams) unlock soon.</span>
     </footer>
   </div>
+  <!-- Zelda Theme Song (YouTube Embed, hidden) -->
+<iframe id="zelda-music" width="0" height="0"
+  src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU"
+  frameborder="0"
+  allow="autoplay">
+</iframe>
+
+<!-- Music Control Button -->
+<button id="music-toggle">🎵 Play Music</button>
+  <script>
+  // Load YouTube IFrame API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('zelda-music');
+  }
+
+  const button = document.getElementById('music-toggle');
+  let isPlaying = false;
+
+  button.addEventListener('click', () => {
+    if (isPlaying) {
+      player.pauseVideo();
+      button.textContent = "🎵 Play Music";
+    } else {
+      player.playVideo();
+      button.textContent = "⏸ Pause Music";
+    }
+    isPlaying = !isPlaying;
+  });
+</script>
 </body>
 </html>
