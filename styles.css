@@ -39,26 +39,39 @@
 .subcard:hover .subcard__cta{ transform: translateX(2px); }
 
 /* optional: compact spacing if your grid is tight */
-.course-card.compact{ padding: 1rem; }
-  margin: 0;
-  min-height: 100vh;
-  background-image: url('./images/zelda-bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 /* === Subcards inside an existing course card (MBA 504) === */
+/* Global Zelda background */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  /* fallback color + image, centered/cover, fixed, no-repeat */
+  background: #000 url('./images/zelda-bg.png') center / cover fixed no-repeat;
+}
+
+/* Translucent content wrapper so the Zelda background shows */
+.page {
+  max-width: 960px;
+  margin: 2rem auto;
+  background: rgba(0,0,0,0.35);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  color: #fff;
+}
+}
 .french-subcards{
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
-
 @media (min-width: 720px){
   .french-subcards{
     grid-template-columns: repeat(3, 1fr);
   }
+}
 .subnav {
   margin: 0.75rem 0 1rem;
   font-size: 1rem;
@@ -67,4 +80,27 @@
   color: #fff;
   text-decoration: underline;
   margin: 0 0.25rem;
+}
+.pdf-link {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.pdf-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+/* Translucent content wrapper so Zelda background shows */
+.page {
+  max-width: 960px;
+  margin: 2rem auto;
+  background: rgba(0,0,0,0.35); /* translucent black */
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  color: #fff;
 }

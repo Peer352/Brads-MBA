@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MBA Quest Hub</title>
+
+  <!-- Fantasy fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0b1b12;                 /* deep forest */
+      --bg2:#12261a;                /* moss */
+      --gold:#d4af37;               /* hyrule gold */
+      --gold-2:#f0d875;
+      --leaf:#2f7b4d;               /* kokiri green */
+      --leaf-2:#3fa66b;
+      --ink:#e9e2c7;                /* parchment ink */
+      --ink-dim:#cfc6a8;
+      --shadow:rgba(0,0,0,.35);
+      --ring:rgba(212,175,55,.35);
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "IM Fell English", Georgia, serif;
+      color: var(--ink);
+      /* Subtle parchment-on-forest background */
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(63,166,107,.15), transparent 55%),
+        radial-gradient(900px 500px at 120% 0%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      /* repeating parchment grain overlay */
+      background-blend-mode: screen, screen, screen, normal;
+    }
+
+    .wrap{ max-width:1100px; margin:0 auto; padding:28px 18px 60px; }
+
+    /* Ornate frame utility */
+    .frame{
+      position: relative;
+      border: 2px solid rgba(212,175,55,.45);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(240,216,117,.06), rgba(255,255,255,0));
+      box-shadow: 0 10px 40px var(--shadow);
+      overflow: hidden;
+    }
+    .frame:before, .frame:after{
+      content:"";
+      position:absolute; inset:0; pointer-events:none;
+      border-radius: 16px;
+    }
+    .frame:before{
+      border: 1px solid rgba(240,216,117,.25);
+      filter: blur(.3px);
+    }
+    .frame:after{
+      background:
+        radial-gradient(420px 120px at 20% 0%, rgba(240,216,117,.10), transparent 60%),
+        radial-gradient(380px 120px at 80% 0%, rgba(63,166,107,.10), transparent 60%);
+      mix-blend-mode: screen;
+      opacity:.9;
+    }
+
+    /* Top bar */
+    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-family: Cinzel, serif; letter-spacing:.5px; font-weight:800; }
+    .crest{
+      width:38px; height:38px; border-radius:10px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color:#1b1b1b;
+      box-shadow: 0 10px 30px var(--ring);
+    }
+    .badge{ font-size:12px; color:var(--ink-dim); border:1px solid rgba(240,216,117,.25); padding:4px 8px; border-radius:999px; }
+
+    /* Hero */
+    .hero{
+      margin-top: 26px;
+      padding: 34px 22px;
+    }
+    .hero h1{
+      margin: 0 0 8px 0;
+      font-family: Cinzel, serif;
+      font-weight: 800;
+      font-size: clamp(28px, 4.5vw, 44px);
+      color: var(--gold-2);
+      text-shadow: 0 2px 0 rgba(0,0,0,.25);
+      letter-spacing:.5px;
+    }
+    .hero p{ margin:0 0 18px 0; color:var(--ink); font-size:clamp(15px,2.2vw,18px); }
+
+    .cta{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px; border-radius:12px;
+      background: linear-gradient(135deg, var(--leaf), var(--leaf-2));
+      color:#0f1712; font-weight:700; text-decoration:none;
+      border:1px solid rgba(240,216,117,.35);
+      box-shadow: 0 10px 28px var(--ring);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .cta:hover{ transform:translateY(-1px); box-shadow:0 14px 32px var(--ring); }
+    .cta svg{ width:18px; height:18px; }
+
+    /* Section title with line + triforce */
+    .section{
+      display:flex; align-items:center; gap:10px;
+      margin: 26px 2px 14px;
+      color:var(--gold-2);
+      font-family: Cinzel, serif;
+      letter-spacing:.4px;
+    }
+    .section .line{
+      flex:1; height:1px; background: linear-gradient(90deg, rgba(240,216,117,.0), rgba(240,216,117,.45), rgba(240,216,117,0));
+    }
+
+    /* Course grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:16px;
+    }
+    @media (max-width: 900px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      position:relative;
+      text-decoration:none; color:inherit;
+      padding:18px 16px 16px;
+      border:1px solid rgba(240,216,117,.25);
+      border-radius:14px;
+      background:
+        linear-gradient(180deg, rgba(240,216,117,.05), rgba(255,255,255,0));
+      box-shadow: 0 6px 20px var(--shadow);
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+      outline: none;
+    }
+    .card:hover{ transform: translateY(-4px); border-color: rgba(240,216,117,.6); box-shadow: 0 12px 28px rgba(0,0,0,.45); }
+    .card:focus-visible{ box-shadow: 0 0 0 4px var(--ring); }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; color:var(--gold-2);
+      background: rgba(240,216,117,.08);
+      border:1px solid rgba(240,216,117,.25);
+      padding:3px 8px; border-radius:999px;
+    }
+    .title{ margin-top:6px; font-family: Cinzel, serif; font-weight:700; font-size:16px; color: #000; /* change added */ }
+    .meta{ color:#000; font-size:13px; }
+    .go{ margin-top:6px; display:inline-flex; align-items:center; gap:8px; color:var(--gold-2); font-weight:600; }
+    .go svg{ width:16px; height:16px; }
+
+    /* Footer */
+    footer{
+      margin-top: 34px; padding-top: 16px;
+      color:var(--ink-dim); font-size:13px;
+      border-top:1px solid rgba(240,216,117,.25);
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+
+    /* Tiny Triforce icon (used multiple places) */
+    .tri{ width:16px; height:14px; display:inline-block; vertical-align:-2px; }
+    /* Zelda background overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("./images/zelda-bg.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* behind everything */
+  filter: brightness(0.85);
+}
+.card {
+   background: rgba(248, 241, 227, 0.25); /* much less transparent */
+  backdrop-filter: blur(6px);          /* softens bg behind the block */
+  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+  opacity: 1;                          /* ensure content is visible */
+}
+ 
+/* Enchanted floating music button */
+#music-toggle{
+  position: fixed; right: 20px; bottom: 20px;
+  padding: 12px 20px;
+  font-family: "Cinzel", serif; font-weight: 800; letter-spacing:.3px;
+  font-size: 16px; color:#1b1b1b;
+
+  /* parchment + subtle gold sheen */
+  background: linear-gradient(135deg, #f8f1e3, #eadfc4);
+  border: 2px solid #d4af37;
+  border-radius: 16px;
+
+  /* float + glow */
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),           /* depth */
+    0 0 12px rgba(212,175,55,.55);        /* golden aura */
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  animation: floaty 3s ease-in-out infinite;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+#music-toggle:hover{
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.55),
+    0 0 18px rgba(240,216,117,.85);
+  filter: brightness(1.03);
+}
+
+/* subtle floating motion */
+@keyframes floaty{
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-6px); }
+}
+
+/* optional: stronger pulse */
+#music-toggle.pulse{
+  animation: floaty 3s ease-in-out infinite, pulseGlow 2.4s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 10px rgba(212,175,55,.55); }
+  50%    { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 22px rgba(240,216,117,.95); }
+}
+      </style>
+  <link rel="stylesheet" href="styles.css">
+</head>
+</script>
+</script>
+<body>
+  <div class="wrap">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="crest" aria-hidden="true">
+          <!-- Triforce -->
+          <svg viewBox="0 0 100 86" width="22" height="18" role="img" aria-label="Triforce">
+            <path d="M50 0 L100 86 H0 Z" fill="#1b1b1b" opacity=".18"/>
+            <path d="M50 5 L95 83 H5 Z" fill="#1b1b1b" opacity=".08"/>
+            <polygon points="50,12 62,33 38,33" fill="#1b1b1b"/>
+            <polygon points="25,55 37,76 13,76" fill="#1b1b1b"/>
+            <polygon points="75,55 87,76 63,76" fill="#1b1b1b"/>
+          </svg>
+        </div>
+        MBA Quest Hub
+      </div>
+      <div class="badge">Guild v0.1</div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero frame" aria-label="Welcome">
+      <h1>The Quest Begins</h1>
+      <p>Choose your course and venture forth. Exams, artifacts, and trials will be unlocked within each course realm.</p>
+      <a class="cta" href="#courses">
+        Enter the Realm
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 5l7 7-7 7" stroke="#0f1712" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Section heading -->
+    <div class="section" id="courses" aria-label="Courses">
+      <svg class="tri" viewBox="0 0 100 86" aria-hidden="true">
+        <polygon points="50,0 100,86 0,86" fill="currentColor" />
+      </svg>
+      <strong>Course Realms</strong>
+      <div class="line"></div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid">
+      <!-- Each card’s href will later point to /courses/slug.html -->
+      <a class="card" href="#" title="MBA 504">
+        <span class="pill">Summer 2 · 2025</span>
+        <div class="title">MBA 504 · Business Law</div>
+        <div class="meta">Edicts and contracts of the realm.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Fall 1 · 2025</span>
+        <div class="title">MBA 539 · Healthcare Finance</div>
+        <div class="meta">The rupees and rituals of care.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Fall 1 · 2025</span>
+        <div class="title">MBA 516 · Operations Management</div>
+        <div class="meta">Forge, flow, and mastery of systems.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Fall 2 · 2025</span>
+        <div class="title">MBA 530 · Economics</div>
+        <div class="meta">Markets, trade winds, and balance.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Fall 2 · 2025</span>
+        <div class="title">MBA 542 · Marketing</div>
+        <div class="meta">Signals, songs, and the hearts of heroes.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Spring 1 · 2026</span>
+        <div class="title">MBA 532 · Corporate Finance</div>
+        <div class="meta">Treasure, risk, and royal coffers.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Spring 2 · 2026</span>
+        <div class="title">MBA 508 · Accounting</div>
+        <div class="meta">Ledgers of the kingdom.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Spring 2 · 2026</span>
+        <div class="title">MBA 538 · Financial Statement Analysis</div>
+        <div class="meta">Reading the runes of finance.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Summer 1 · 2026</span>
+        <div class="title">MBA 514 · Information Analysis & Management</div>
+        <div class="meta">Charts, clues, and counsel.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Summer 1 · 2026</span>
+        <div class="title">MBA 515 · Business Analytics</div>
+        <div class="meta">From data shards to wisdom.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Summer 2 · 2026</span>
+        <div class="title">MBA 558 · Strategic Management</div>
+        <div class="meta">War rooms, maps, and moves.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <span class="pill">Summer 2 · 2026</span>
+        <div class="title">MBA 562 · Management</div>
+        <div class="meta">Leadership of the guilds.</div>
+        <div class="go">Enter course
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <footer>
+      <span>© 2025 MBA Quest Hub</span>
+      <span>Trials (exams) unlock soon.</span>
+    </footer>
+  </div>
+  <!-- Zelda Theme Song (YouTube Embed, hidden) -->
+<iframe id="zelda-music" width="0" height="0"
+  src="https://www.youtube.com/embed/cGufy1PAeTU?enablejsapi=1&loop=1&playlist=cGufy1PAeTU"
+  frameborder="0"
+  allow="autoplay">
+</iframe>
+
+<!-- Music Control Button -->
+<button id="music-toggle">🎵 Play Music</button>
+  <script>
+  // Load YouTube IFrame API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('zelda-music');
+  }
+
+  const button = document.getElementById('music-toggle');
+  let isPlaying = false;
+
+  button.addEventListener('click', () => {
+    if (isPlaying) {
+      player.pauseVideo();
+      button.textContent = "🎵 Play Music";
+    } else {
+      player.playVideo();
+      button.textContent = "⏸ Pause Music";
+    }
+    isPlaying = !isPlaying;
+  });
+</script>
+</body>
+</html>
