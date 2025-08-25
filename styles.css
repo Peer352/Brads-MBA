@@ -31,7 +31,7 @@
 }
 
 .subcard__cta{
-  font-size: x-small;
+  font-size: 3.2rem;
   opacity: 0.9;
   transition: transform 120ms ease;
 }
