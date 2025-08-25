@@ -60,7 +60,6 @@ body {
   border-radius: 12px;
   color: #fff;
 }
-}
 .french-subcards{
   display: grid;
   grid-template-columns: 1fr;
